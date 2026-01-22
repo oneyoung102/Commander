@@ -53,18 +53,11 @@
 ## 문법
 
  ### 실행 명령어 (`/`)
-  - #### /remove   
-    > **Running diplay** 화면을 지웁니다.
+  - #### /say   
+    > **Running diplay**의 (0,0) 위치에 택스트를 생성합니다.
 
     ```c++
-    /remove all //전체 지우기
-    /remove part [X-FROM] [Y-FROM] [X-TO] [Y-TO] //범위 지우기
-    ```
-  - #### /random   
-    > 변수에 난수를 대입합니다.   
-
-    ```c++
-    /random [RAND-TO] [RAND-FROM] [VARIABLE]
+    /say "[TEXT]"
     ```
   - #### /tell   
     > **Running diplay**의 특정 위치에 문자열을 출력합니다.    
@@ -80,22 +73,12 @@
     /textlen "[TEXT]" [VARIABLE] //텍스트 길이를 변수에 대입
     /textlen [VARIABLE] // 최근에 사용한 텍스트 길이를 변수에 대입
     ```
-  - #### /usef   
-    > 미구현   
-    > 함수를 사용합니다.
+  - #### /color
+    > 앞으로의 색 설정을 변경합니다.
+    > 다른 색 설정보다 우선순위가 낮습니다.
 
     ```c++
-    /usef "[FUNC_NAME]" ([VARIABLES])
-    ```
-  - #### /int   
-    > 정수형 변수를 선언합니다.   
-    > 선언한 변수는 항상 `[ ... ]` 사이에 변수명을 입력하여 사용합니다.   
-    > 숫자처럼 사용할 수 있습니다.  
-    > 문자열 안에서 또한 같은 방식으로 사용할 수 있습니다.   
-    
-    ```c++
-    /int "[VARIABLE]" //선언과 함께 0 대입
-    /int "[VARIABLE]" = [NUMBER] //선언과 함께 수 대입
+    /color [TEXT-COLOR] [BACKGROUND-COLOR]
     ```
   - #### /attr   
     > 최근에 생성한 도형 또는 택스트의 속성을 변경합니다.
@@ -105,12 +88,27 @@
       /attr copy [XPOS] [YPOS]
       /attr color [TEXT-COLOR] [BACKGROUND-COLOR]
       ```
-  - #### /say   
-    > **Running diplay**의 (0,0) 위치에 택스트를 생성합니다.
+  - #### /line   
+    > **Running diplay** 화면에 선을 출력합니다.    
 
     ```c++
-    /say "[TEXT]"
+    /line [X-FROM] [Y-FROM] [X-TO] [Y-TO]  [BACKGROUND-COLOR]
     ```
+  
+  - #### /fill
+    > **Running diplay**의 특정 범위를 채웁니다.
+ 
+    ```c++
+    /fill [X-FROM] [Y-FROM] [X-TO] [Y-TO] [BACKGROUND-COLOR]
+    ```
+    - 라인, 채우기
+      ```c++
+      /fill [X-FROM] [Y-FROM] [X-TO] [Y-TO] [BACKGROUND-COLOR] //내부를 채워서 출력
+      /fill [X-FROM] [Y-FROM] [X-TO] [Y-TO] [BACKGROUND-COLOR] line(false) //내부를 채워서 출력
+      /fill [X-FROM] [Y-FROM] [X-TO] [Y-TO] [BACKGROUND-COLOR] line(true) //내부는 검정으로 채워서 라인만 출력
+      /fill [X-FROM] [Y-FROM] [X-TO] [Y-TO] [BACKGROUND-COLOR] line(true) empty(false) //내부는 검정으로 채워서 라인만 출력
+      /fill [X-FROM] [Y-FROM] [X-TO] [Y-TO] [BACKGROUND-COLOR] line(true) empty(true) //내부는 비우고 라인만 출력
+      ```
   - #### /shape   
     > **Running diplay**에 도형을 생성합니다.   
     > 모든 도형은 접하는 직사각형의 왼쪽 모서리 끝을 기준점으로 합니다.
@@ -129,6 +127,14 @@
       /shape square [SCALE] [XPOS] [YPOS] [BACKGROUND-COLOR] line(true) empty(true) //내부는 비우고 라인만 출력
       ```
       > `triangle`, `circle`의 경우도 마찬가지
+  - #### /remove   
+    > **Running diplay** 화면을 지웁니다.
+
+    ```c++
+    /remove all //전체 지우기
+    /remove part [X-FROM] [Y-FROM] [X-TO] [Y-TO] //범위 지우기
+    ```
+    
   - #### /stop   
     > 실행을 강제 종료합니다.
 
@@ -141,49 +147,26 @@
     ```c++
     /delay [TIME] //단위는 ms
     ```
-  - #### /deff   
-    > 미구현   
-    > 함수를 선언합니다.
-
-    ```c++
-    /deff "[FUNC_NAME]" ([VARIABLES]) {
-    ```
-  - #### /fill
-    > **Running diplay**의 특정 범위를 채웁니다.
- 
-    ```c++
-    /fill [X-FROM] [Y-FROM] [X-TO] [Y-TO] [BACKGROUND-COLOR]
-    ```
-    - 라인, 채우기
-      ```c++
-      /fill [X-FROM] [Y-FROM] [X-TO] [Y-TO] [BACKGROUND-COLOR] //내부를 채워서 출력
-      /fill [X-FROM] [Y-FROM] [X-TO] [Y-TO] [BACKGROUND-COLOR] line(false) //내부를 채워서 출력
-      /fill [X-FROM] [Y-FROM] [X-TO] [Y-TO] [BACKGROUND-COLOR] line(true) //내부는 검정으로 채워서 라인만 출력
-      /fill [X-FROM] [Y-FROM] [X-TO] [Y-TO] [BACKGROUND-COLOR] line(true) empty(false) //내부는 검정으로 채워서 라인만 출력
-      /fill [X-FROM] [Y-FROM] [X-TO] [Y-TO] [BACKGROUND-COLOR] line(true) empty(true) //내부는 비우고 라인만 출력
-      ```
   - #### /goto
     > **Commander**의 특정 줄번호로 이동합니다.
-
+    
     ```c++
     /goto [LINE-POS]
     ```
-  - #### /line   
-    > **Running diplay** 화면에 선을 출력합니다.    
-
+  
+  - #### /int   
+    > 정수형 변수를 선언합니다.   
+    > 선언한 변수는 항상 `[ ... ]` 사이에 변수명을 입력하여 사용합니다.   
+    > 숫자처럼 사용할 수 있습니다.    
+    > 문자열 안에서 또한 같은 방식으로 사용할 수 있습니다. (ex. `/tell [a] [a]+2 "a = [a]"`)   
+    
     ```c++
-    /line [X-FROM] [Y-FROM] [X-TO] [Y-TO]  [BACKGROUND-COLOR]
-    ```
-  - #### /color
-    > 앞으로의 색 설정을 변경합니다.
-    > 다른 색 설정보다 우선순위가 낮습니다.
-
-    ```c++
-    /color [TEXT-COLOR] [BACKGROUND-COLOR]
+    /int "[VARIABLE]" //선언과 함께 0 대입
+    /int "[VARIABLE]" = [NUMBER] //선언과 함께 수 대입
     ```
   - #### /vc
     > 변수를 연산합니다.
-
+    
     ```c++
     /vc [VARIABLE] = [NUMBER] //대입
     /vc [VARIABLE] += [NUMBER] //더하기
@@ -191,15 +174,29 @@
     /vc [VARIABLE] *= [NUMBER] //곱하기
     /vc [VARIABLE] /= [NUMBER] //나누기
     ```
- ### 감지 명령어 (`?`)
- 
-  - #### ?test
-    > 사용자의 키입력을 감지합니다.
-
+  - #### /random   
+    > 변수에 난수를 대입합니다.   
+    
     ```c++
-    ?test('[CHARACTER]') { //특정 문자를 감지
-    ?test(key) { //아무 문자나 감지
+    /random [RAND-TO] [RAND-FROM] [VARIABLE]
     ```
+  - #### /usef   
+    > 미구현   
+    > 함수를 사용합니다.
+    
+    ```c++
+    /usef "[FUNC_NAME]" ([VARIABLES])
+    ```
+  - #### /deff   
+    > 미구현   
+    > 함수를 선언합니다.
+    
+    ```c++
+    /deff "[FUNC_NAME]" ([VARIABLES]) {
+    ```
+  
+### 감지 명령어 (`?`)
+ 
   - #### ?if
     > 그러한 경우를 감지합니다.
 
@@ -219,10 +216,73 @@
     ?for([CONDITONS]) [REPEAT-COUNT] { //특정 횟수만큼 반복
     ?for([CONDITONS]) i { //무한 반복
     ```
-    > 무한 반복 시에 실행을 빠져나올 수 없는 점에 주의하세요.
+    > 무한 반복 시에 실행을 빠져나올 수 없는 점에 주의하세요.   
+  - #### ?test
+    > 사용자의 키입력을 감지합니다.
+
+    ```c++
+    ?test('[CHARACTER]') { //특정 문자를 감지
+    ?test(key) { //아무 문자나 감지
+    ```
+
+ ### 연산자
+  > 연산의 결과는 숫자처럼 사용할 수 있습니다.   
+  > (ex. `/tell 1*2 3+4^(3-2) "abc"`, `?if(123>=12&&10+1==9+8) {`)
+
+  - #### +   
+    > 두 피연산자를 더합니다.
+  - #### -   
+    > 두 피연산자를 뺍니다.
+  - #### *   
+    > 두 피연산자를 곱합니다.
+  - #### /   
+    > 두 피연산자를 나눕니다.
+  - #### %   
+    > 두 피연산자에 대해서 나머지를 구합니다.
+  - #### ^   
+    > 두 피연산자를 지수연산 합니다.
     
+  - #### &&   
+    > 두 피연산자를 논리곱 합니다.
+  - #### \##   
+    > 두 피연산자를 논리합 합니다.
+  - #### <, <=, >, >, ==   
+    > 두 피연산자를 비교합니다.
+
+  - #### (, )   
+    > 피연산자를 우선 연산합니다.
+
  ### 중괄호 (`}`)
-   열린 `{`를 닫습니다.
+   감지 명령어에서 사용한 열린 `{`를 닫습니다.
+
+
+<hr/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
