@@ -64,7 +64,7 @@
 
     ```c++
     /tell [XPOS] [YPOS] "[TEXT]" // 특정 위치에 출력
-    /tell [XPOS] [YPOS] [TEXT-COLOR] [BACKGROUND-COLOR] "[TEXT]" 특정 위치에, 특정 색깔로 출력
+    /tell [XPOS] [YPOS] [TEXT-COLOR] [BACKGROUND-COLOR] "[TEXT]" //특정 위치에, 특정 색깔로 출력
     ```
   - #### /textlen     
     > 문자열의 길이를 변수에 대입합니다.
